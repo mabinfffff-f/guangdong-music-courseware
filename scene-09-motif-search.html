@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#121a14">
+<title>寻找谱例中的骨干音 · 旋律探究</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#111811;color:#f8efd9;font-family:"Microsoft YaHei",system-ui,sans-serif}
+[hidden]{display:none!important}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#24342a,#121a14 68%,#0c120e)}
+.header{position:absolute;top:45px;left:100px;right:100px;display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid #d3b57270;padding-bottom:18px}
+.eyebrow{margin:0;color:#e2c47e;font-size:24px}
+h1{margin:6px 0 0;font:400 54px/1.15 KaiTi,STKaiti,"Songti SC",serif;color:#fff2d5}
+.header-side{color:#dbcfb4;font-size:22px}
+.score-shell{position:absolute;left:50%;top:190px;transform:translateX(-50%);width:1640px;padding:0;background:transparent}
+.score-paper{position:relative;width:100%;padding:0;background:#faf8f0;color:#171611;box-shadow:0 18px 55px #0009}
+.score-svg{display:block;width:100%;height:auto}
+.score-title{font-family:KaiTi,STKaiti,serif;font-size:48px;fill:#28241d}
+.score-sub{font-family:KaiTi,STKaiti,serif;font-size:27px;fill:#363229}
+.info{font-family:"Microsoft YaHei",sans-serif;font-size:22px;fill:#292720}
+.staffline{stroke:#171611;stroke-width:2}
+.barline{stroke:#171611;stroke-width:3}
+.note-num{font-family:"Times New Roman",serif;font-size:50px;font-weight:600;fill:#111}
+.rhythm{stroke:#24211b;stroke-width:5;stroke-linecap:round}
+.answer-mark{opacity:0;fill:#f0c866;fill-opacity:.45;stroke:#b57428;stroke-width:3;transition:opacity .2s}
+.stage.revealed .answer-mark{opacity:1}
+.controls{position:absolute;left:150px;right:150px;bottom:115px;display:flex;align-items:center;justify-content:center;gap:18px}
+button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:12px 22px;border:1px solid #ceb475;border-radius:5px;background:#242e23;color:#fff2d5;font:400 23px/1.2 "Microsoft YaHei",sans-serif;cursor:pointer}
+button:hover{background:#41432d}
+button.primary{background:#78372d;border-color:#d8ad75}
+button.primary:hover{background:#914438}
+button:focus-visible{outline:3px solid #ffe39c;outline-offset:4px}
+.icon{font-size:23px}
+.question{position:absolute;left:250px;right:250px;bottom:35px;margin:0;text-align:center;color:#fff2d5;font-size:30px}
+.status{min-width:180px;text-align:left;color:#e6d5ae;font-size:18px}
+@media(max-width:900px){.header{top:4%;left:5%;right:5%}.eyebrow{font-size:16px}h1{font-size:34px}.header-side{font-size:15px}.score-shell{width:90%}.controls{left:5%;right:5%;bottom:13%;gap:8px}button{min-height:44px;padding:8px 12px;font-size:16px}.question{left:5%;right:5%;bottom:3%;font-size:20px}.status{font-size:13px}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<header class="header"><div><p class="eyebrow">旋律探究</p><h1>寻找谱例中的骨干音</h1></div><span class="header-side">《步步高》主题旋律</span></header>
+<section class="score-shell" aria-label="《步步高》主题简谱">
+<div class="score-paper">
+<svg class="score-svg" viewBox="0 0 1600 550" role="img" aria-labelledby="score-title score-desc">
+<title id="score-title">《步步高》简谱谱例</title><desc id="score-desc">广东音乐，1等于C，四二拍。第一小节的三个骨干音是3、3、5。</desc>
+<text x="800" y="72" text-anchor="middle" class="score-title">步 步 高</text>
+<text x="800" y="115" text-anchor="middle" class="score-sub">广东音乐</text>
+<text x="72" y="183" class="info">1 = C　　2/4</text>
+<text x="72" y="223" class="info">中速　富有朝气地</text>
+<text x="1375" y="216" class="info">吕文成　曲</text>
+<!-- First line of the score: four measures. -->
+<g aria-label="第一行旋律">
+ <g class="barline"><path d="M330 255v115M650 255v115M970 255v115M1290 255v115M1530 255v115"/></g>
+ <rect class="answer-mark" x="65" y="252" width="250" height="112" rx="12"/>
+ <text class="note-num" x="94" y="330">3</text><text class="note-num" x="182" y="330">3</text><text class="note-num" x="270" y="330">5</text>
+ <path class="rhythm" d="M88 344h112"/>
+ <text class="note-num" x="357" y="330">5</text><text class="note-num" x="433" y="330">3</text><text class="note-num" x="500" y="330">2</text><text class="note-num" x="548" y="330">3</text><text class="note-num" x="598" y="330">1</text><text class="note-num" x="624" y="330">2</text>
+ <path class="rhythm" d="M350 344h94M492 344h146M492 352h146"/>
+ <text class="note-num" x="681" y="330">6</text><text class="note-num" x="745" y="330">1</text><text class="note-num" x="832" y="330">5</text><text class="note-num" x="914" y="330">5</text>
+ <path class="rhythm" d="M673 344h84M824 344h102"/>
+ <text class="note-num" x="1004" y="330">0</text><text class="note-num" x="1081" y="330">3</text><text class="note-num" x="1158" y="330">5</text><text class="note-num" x="1320" y="330">2</text><text class="note-num" x="1420" y="330">3</text>
+ <path class="rhythm" d="M996 344h166M1080 352h82M1312 344h130"/>
+</g>
+<path class="staffline" d="M64 378H1530"/>
+<!-- Second line, kept as context from the supplied excerpt. -->
+<g aria-label="第二行旋律">
+ <path class="barline" d="M400 405v108M710 405v108M1135 405v108M1530 405v108"/>
+ <text class="note-num" x="82" y="478">5</text><text class="note-num" x="170" y="478">3</text><text class="note-num" x="258" y="478">5</text><text class="note-num" x="323" y="478">1</text><text class="note-num" x="352" y="478">3</text>
+ <path class="rhythm" d="M77 492h115M165 500h111M315 492h60"/>
+ <text class="note-num" x="433" y="478">5</text><text class="note-num" x="517" y="478">4</text><text class="note-num" x="575" y="478">5</text><text class="note-num" x="641" y="478">3</text>
+ <path class="rhythm" d="M507 492h142M507 500h142"/>
+ <text class="note-num" x="746" y="478">4</text><text class="note-num" x="809" y="478">5</text><text class="note-num" x="877" y="478">3</text><text class="note-num" x="955" y="478">2</text><text class="note-num" x="1020" y="478">3</text><text class="note-num" x="1080" y="478">5</text><text class="note-num" x="1107" y="478">6</text>
+ <path class="rhythm" d="M739 492h136M949 492h161M949 500h161"/>
+ <text class="note-num" x="1184" y="478">1</text><text class="note-num" x="1330" y="478">1</text><text x="1392" y="478" class="note-num">…</text>
+ <path class="rhythm" d="M1322 492h52"/>
+</g>
+</svg>
+</div>
+</section>
+<div class="controls">
+<button class="primary" id="answer" type="button" aria-pressed="false"><span class="icon" aria-hidden="true">◉</span><span>显示答案</span></button>
+<button id="audio-toggle" type="button"><span class="icon" aria-hidden="true">▶</span><span>播放主题旋律</span></button>
+<span class="status" id="audio-status" role="status"></span>
+<audio id="theme" src="步步高主题旋律.mp3" preload="metadata"></audio>
+</div>
+<p class="question">聆听并观察：第一小节的骨干音是什么？</p>
+</main>
+<script>
+const stage=document.getElementById("stage");
+function fit(){stage.style.setProperty("--fit",Math.min(innerWidth/1920,innerHeight/1080))}
+addEventListener("resize",fit);fit();
+const answer=document.getElementById("answer");
+answer.addEventListener("click",()=>{
+ const shown=answer.getAttribute("aria-pressed")!=="true";
+ answer.setAttribute("aria-pressed",String(shown));
+ stage.classList.toggle("revealed",shown);
+ answer.querySelector("span:last-child").textContent=shown?"隐藏答案":"显示答案";
+});
+const audio=document.getElementById("theme"),toggle=document.getElementById("audio-toggle"),status=document.getElementById("audio-status");
+toggle.addEventListener("click",()=>{
+ if(audio.paused){audio.play().then(()=>{toggle.querySelector("span:last-child").textContent="暂停旋律";toggle.querySelector(".icon").textContent="Ⅱ";status.textContent="";}).catch(()=>{status.textContent="暂无法读取音频文件";});}
+ else{audio.pause();toggle.querySelector("span:last-child").textContent="播放主题旋律";toggle.querySelector(".icon").textContent="▶";}
+});
+audio.addEventListener("ended",()=>{toggle.querySelector("span:last-child").textContent="播放主题旋律";toggle.querySelector(".icon").textContent="▶";});
+</script>
+</body>
+</html>

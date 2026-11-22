@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#ef7a72">
+<title>民歌演唱展厅</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#ef7c74;color:#382d28;font-family:"Microsoft YaHei","Noto Serif CJK SC",serif}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;overflow:hidden;background:linear-gradient(135deg,#ee796f,#f1877e 55%,#e8736c)}
+.slide{position:absolute;left:62px;right:0;top:50px;bottom:38px;border:2px solid #e9d4a0;border-radius:150px 140px 115px 140px;background:linear-gradient(135deg,#fffefa,#fffdf7 56%,#f9f4e8);box-shadow:0 18px 40px #8f332a28;overflow:hidden}
+.slide:after{content:"";position:absolute;inset:18px;border:1px solid #e6d8bd;border-radius:134px 125px 100px 125px;pointer-events:none}
+.ribbon{position:absolute;z-index:5;left:0;top:82px;width:285px;height:82px;padding:19px 28px 18px 38px;clip-path:polygon(0 0,80% 0,100% 50%,80% 100%,0 100%,10% 50%);background:#0daee0;color:#fff;font:500 30px/45px "Microsoft YaHei",sans-serif;text-align:left;filter:drop-shadow(0 6px 4px #633b2b55)}
+.chapter{position:absolute;right:105px;top:104px;color:#947447;font:500 27px/1.2 KaiTi,STKaiti,"Songti SC",serif;letter-spacing:1px}
+.prompt{position:absolute;left:300px;top:72px;width:1125px;margin:0;color:#372b24;font:400 37px/1.48 KaiTi,STKaiti,"Songti SC",serif}.prompt em{font-style:normal;color:#934333}
+.score{position:absolute;left:245px;right:208px;top:350px;height:475px;display:flex;flex-direction:column;gap:6px;color:#302722}
+.audio-dock{position:absolute;left:250px;right:208px;bottom:63px;height:96px;display:flex;align-items:center;gap:20px;padding:0 23px;border:1px solid #d4c6ad;border-radius:49px;background:#fffdf7e8;box-shadow:0 8px 18px #65533a1c;z-index:4}.play{width:56px;height:56px;flex:none;border:0;border-radius:50%;display:grid;place-items:center;background:#efa178;color:white;cursor:pointer}.play:hover{background:#dd785c}.play svg{width:23px;height:23px;fill:currentColor}.track{width:208px;flex:none;display:flex;flex-direction:column;gap:4px}.track-title{color:#40342d;font:500 21px/1.2 KaiTi,STKaiti,"Songti SC",serif}.track-source{color:#80766b;font-size:15px}.speed{display:flex;align-items:center;gap:5px;padding:4px;border:1px solid #dacdb6;border-radius:23px;background:#f8f3e8}.speed button{min-width:104px;height:38px;padding:0 13px;border:0;border-radius:20px;background:transparent;color:#65584d;font:500 17px "Microsoft YaHei",sans-serif;cursor:pointer}.speed button.active{background:#237f77;color:#fff}.seek{height:6px;min-width:120px;flex:1;appearance:none;border-radius:8px;background:linear-gradient(90deg,#b49c59 0%,#b49c59 var(--progress,0%),#d5d0c4 var(--progress,0%),#d5d0c4 100%);cursor:pointer}.seek::-webkit-slider-thumb{appearance:none;width:15px;height:15px;border-radius:50%;background:#27837a;border:2px solid #fff;box-shadow:0 1px 5px #3334}.seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#27837a;border:2px solid #fff;box-shadow:0 1px 5px #3334}.time{min-width:104px;color:#655c52;text-align:center;font:500 16px/1 "Microsoft YaHei",sans-serif;font-variant-numeric:tabular-nums}.restart{width:42px;height:42px;flex:none;display:grid;place-items:center;border:1px solid #c9bda8;border-radius:50%;background:transparent;color:#695e53;cursor:pointer}.restart:hover{border-color:#27837a;color:#27837a}.restart svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8}
+.media{position:absolute;left:-5px;top:0;width:1px;height:1px;opacity:.001;pointer-events:none}.feedback{position:absolute;left:50%;bottom:24px;z-index:6;transform:translateX(-50%);color:#8a7969;font-size:16px;white-space:nowrap}
+.slide{overflow:visible}.slide:after{display:none}.ribbon{left:-62px;top:35px;width:305px;clip-path:polygon(0 0,83% 0,100% 50%,83% 100%,0 100%);background:#08a9ce;border-block:2px solid #bd6a39}.chapter{top:45px;right:90px;color:#6c5b4d;letter-spacing:0}.prompt{left:238px;top:77px;width:1320px;font-size:40px;line-height:1.42;text-indent:1.35em}.score{display:block;left:195px;right:auto;width:1370px;height:665px;top:201px}.score svg{overflow:visible;fill:#2d251f;font:600 46px "Arial Narrow","Microsoft YaHei",sans-serif}.score .expression{font:400 38px KaiTi,STKaiti,"Songti SC",serif}.score path{fill:none;stroke:#302722;stroke-width:2.4}.score .bars{stroke:#756b60;stroke-width:1.6}.lyric-svg{fill:#b82f26;font:400 36px "Microsoft YaHei",sans-serif}.audio-dock{left:246px;right:207px;bottom:30px;height:78px;border-color:#6e7d66;background:#13231d;color:#f8edd4}.play{background:#d6bd7b;color:#172019}.track-title,.time,.restart{color:#f1e5c5}.track-source{color:#bcbaaa}.speed{background:#0c1813}.speed button{color:#e5dfd1}.speed button.active{background:#d6bd7b;color:#18221c}.feedback{display:none}
+.stage{background:linear-gradient(135deg,#18372a,#294b38 55%,#183126)}
+.ribbon{background:#27604d;border-block-color:#d6b876}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <section class="slide" aria-label="民歌版《步步高》简谱课件">
+    <div class="ribbon">实践体验</div>
+    <div class="chapter">民歌演唱展厅</div>
+    <p class="prompt">同学们，请用捻指作为伴奏，来唱一唱这充满热情、积极向上的民歌版<em>《步步高》</em>吧。</p>
+    <section class="score" aria-label="民歌版《步步高》简谱与歌词">
+      <img src="scene-15-clean-score.png" alt="民歌版《步步高》四行简谱与歌词，1=C，吕文成曲" style="display:block;width:100%;height:100%;object-fit:contain">
+    </section>
+    <section class="audio-dock" aria-label="民歌范唱播放控制">
+      <button class="play" id="play" type="button" aria-label="播放范唱"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+      <div class="track"><span class="track-title">民歌版《步步高》范唱</span><span class="track-source" id="sourceStatus">民歌演唱音频</span></div>
+      <div class="speed" role="group" aria-label="范唱速度"><button class="active" type="button" data-rate="1" aria-pressed="true">原速</button><button type="button" data-rate="0.75" aria-pressed="false">慢速</button></div>
+      <input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="范唱进度">
+      <span class="time"><span id="current">00:00</span> / <span id="duration">--:--</span></span>
+      <button class="restart" id="restart" type="button" aria-label="重新播放" title="重新播放"><svg viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2 6M3 11V5m0 6h6"/></svg></button>
+    </section>
+    <audio class="media" id="source" preload="metadata" src="步步高民歌.mp3"></audio>
+  </section>
+  <div class="feedback">跟随简谱聆听与演唱</div>
+</main>
+<script>
+const stage=document.getElementById('stage');
+const media=document.getElementById('source');
+const playButton=document.getElementById('play');
+const playIcon=document.getElementById('playIcon');
+const seek=document.getElementById('seek');
+const current=document.getElementById('current');
+const duration=document.getElementById('duration');
+const status=document.getElementById('sourceStatus');
+const rateButtons=[...document.querySelectorAll('.speed button')];
+let rate=1;
+function fit(){stage.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080))}
+function timeText(v){if(!Number.isFinite(v))return'00:00';const s=Math.floor(v);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function render(){current.textContent=timeText(media.currentTime||0);if(media.duration){duration.textContent=timeText(media.duration);seek.value=String(Math.round(media.currentTime/media.duration*1000));seek.style.setProperty('--progress',(media.currentTime/media.duration*100)+'%')}}
+function setPlaying(value){playButton.setAttribute('aria-label',value?'暂停范唱':'播放范唱');playIcon.innerHTML=value?'<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>'}
+async function togglePlay(){if(media.paused){try{await media.play()}catch{status.textContent='伴奏音频无法播放'}}else media.pause()}
+playButton.addEventListener('click',togglePlay);
+rateButtons.forEach(button=>button.addEventListener('click',()=>{rate=Number(button.dataset.rate);media.playbackRate=rate;media.preservesPitch=true;media.webkitPreservesPitch=true;rateButtons.forEach(b=>{const on=b===button;b.classList.toggle('active',on);b.setAttribute('aria-pressed',String(on))})}));
+seek.addEventListener('input',()=>{if(media.duration){media.currentTime=Number(seek.value)/1000*media.duration;render()}});
+document.getElementById('restart').addEventListener('click',()=>{media.currentTime=0;media.playbackRate=rate;media.play().catch(()=>{status.textContent='伴奏音频无法播放'})});
+media.addEventListener('loadedmetadata',render);media.addEventListener('timeupdate',render);media.addEventListener('seeked',render);media.addEventListener('play',()=>setPlaying(true));media.addEventListener('pause',()=>setPlaying(false));media.addEventListener('ended',()=>setPlaying(false));media.addEventListener('error',()=>{status.textContent='未找到钢琴伴奏音频'});
+addEventListener('resize',fit);fit();render();
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#f2ead8">
+<title>动机从哪里来 · 旋律探究</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#e8ddc7;color:#38291f;font-family:"Microsoft YaHei","Noto Serif CJK SC",serif}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;overflow:hidden;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;background:#f5eedf}
+.paper{position:absolute;inset:0;background:radial-gradient(ellipse at 16% 13%,#fffdf4 0,transparent 44%),radial-gradient(ellipse at 91% 82%,#eadcc2 0,transparent 34%),linear-gradient(105deg,#f7f0e2,#f2e9d7 58%,#f8f1e4)}
+.paper:before{content:"";position:absolute;inset:0;opacity:.2;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.17'/%3E%3C/svg%3E");mix-blend-mode:multiply}
+.topline{position:absolute;left:84px;top:58px;display:flex;align-items:center;gap:18px;color:#685e4e;font-size:26px;letter-spacing:2px}.seal{width:18px;height:18px;border-radius:50%;background:linear-gradient(135deg,#ecd08b,#a8742d);box-shadow:0 1px 4px #7b4b252c}
+.motif-en{position:absolute;right:92px;top:52px;color:#655748;font-family:Georgia,serif;font-size:24px;letter-spacing:5px}
+h1{position:absolute;left:122px;top:180px;margin:0;color:#963b2c;font:700 112px/1.15 KaiTi,STKaiti,"Songti SC",serif;letter-spacing:4px;text-shadow:1px 2px 0 #f8dfb8,2px 4px 2px #6a34252b}
+.title-rule{position:absolute;left:132px;top:320px;width:480px;height:3px;background:linear-gradient(90deg,#a44732,#c6a56b 68%,transparent)}
+.info-frame{position:absolute;left:126px;top:420px;width:735px;min-height:292px;padding:54px 60px 48px;border:5px solid #a74632;border-radius:24px 30px 22px 34px;background:#f8f1e4d9;box-shadow:0 13px 20px #6c492324,inset 0 0 0 7px #f8f1e4,inset 0 0 0 9px #c68a61;display:flex;align-items:center}
+.info-frame:before,.info-frame:after{content:"";position:absolute;width:34px;height:34px;border:5px solid #a74632;background:#f8f1e4}.info-frame:before{left:-5px;top:24px;border-right:0;border-radius:18px 0 0 18px}.info-frame:after{right:-5px;bottom:24px;border-left:0;border-radius:0 18px 18px 0}
+.info-copy{margin:0;color:#403025;font:500 39px/1.75 KaiTi,STKaiti,"Songti SC",serif}.info-copy em{font-style:normal;color:#923d2e;font-weight:700}
+.stair-scene{position:absolute;left:855px;top:154px;width:930px;height:760px;cursor:pointer;outline:none}.stair-scene:focus-visible{filter:drop-shadow(0 0 7px #bd8d39)}
+.stairs{position:absolute;left:100px;right:20px;bottom:80px;height:440px;filter:drop-shadow(0 24px 20px #54322335)}
+.step{position:absolute;bottom:0;width:290px;height:165px;border:3px solid #9e3f2d;background:linear-gradient(145deg,#c85c3f 0%,#913a2b 63%,#752e25 100%);box-shadow:inset 0 4px 0 #e6a368,inset -12px 0 20px #57261d5c,0 15px 20px #43231d2d;clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.step:before{content:"";position:absolute;left:0;right:0;top:0;height:18px;background:linear-gradient(90deg,#f2c078,#d98e51 50%,#f0bf74);box-shadow:0 4px 10px #391d1840}
+.step:nth-child(1){left:24px;height:170px;width:305px}.step:nth-child(2){left:247px;height:292px;width:305px}.step:nth-child(3){left:470px;height:422px;width:305px}
+.step-num{position:absolute;inset:22px 0 0;display:grid;place-items:center;color:#f4d38e;font:700 112px/1 Georgia,"Times New Roman",serif;text-shadow:0 3px 2px #572b20,0 0 10px #f1c78069;transition:transform .35s,color .35s,text-shadow .35s}
+.step.active .step-num{color:#fff0af;transform:translateY(-6px);text-shadow:0 0 12px #ffda70,0 0 30px #ffd86a,0 4px 4px #5e241b}
+.step.active:after{content:"";position:absolute;left:50%;top:58%;width:148px;height:148px;transform:translate(-50%,-50%);border:4px solid #ffe19a;border-radius:50%;box-shadow:0 0 0 12px #ffdc7330,0 0 42px #ffd875;animation:pulse .8s ease-out infinite alternate}
+@keyframes pulse{to{transform:translate(-50%,-50%) scale(1.08);opacity:.7}}
+.music-path{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}.ribbon{fill:none;stroke:#d6aa54;stroke-width:18;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 2px #7c522d35);stroke-dasharray:1700;stroke-dashoffset:1700}.playing .ribbon{animation:ribbon-draw 2.4s cubic-bezier(.22,.7,.22,1) forwards}.ribbon-highlight{fill:none;stroke:#f5df9c;stroke-width:5;stroke-linecap:round;stroke-dasharray:1650;stroke-dashoffset:1650}.playing .ribbon-highlight{animation:ribbon-draw 2.4s cubic-bezier(.22,.7,.22,1) forwards}@keyframes ribbon-draw{to{stroke-dashoffset:0}}
+.arrowhead{fill:#d8ad5d;filter:drop-shadow(0 3px 2px #5e392b38)}
+.cloud{position:absolute;fill:none;stroke:#c9ae79;stroke-width:3;opacity:.36}.cloud-a{left:30px;top:90px;width:250px;height:100px}.cloud-b{right:-15px;bottom:20px;width:260px;height:110px}
+.blossom{position:absolute;fill:#a74632;opacity:.78}.blossom-a{right:-10px;top:-28px;width:210px;height:180px}.blossom-b{left:-22px;bottom:8px;width:220px;height:180px}
+.caption{position:absolute;left:120px;right:120px;bottom:44px;display:flex;align-items:center;justify-content:space-between;color:#796d59;font-size:23px}.caption strong{font-weight:500;color:#8f3c2b}.play{display:flex;align-items:center;gap:12px;padding:13px 22px;border:1px solid #a74632;border-radius:24px;background:#f7efe0cc;color:#8f3c2b;font:500 22px "Microsoft YaHei",sans-serif;cursor:pointer}.play:hover{background:#a74632;color:#fff4de}.play-icon{width:0;height:0;border-top:9px solid transparent;border-bottom:9px solid transparent;border-left:14px solid currentColor}.play[aria-pressed="true"] .play-icon{width:13px;height:17px;border:0;border-left:4px solid currentColor;border-right:4px solid currentColor}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="paper" aria-hidden="true"></div>
+  <div class="topline"><span class="seal"></span><span>05 · 深度分析</span></div>
+  <div class="motif-en">MOTIVE</div>
+  <svg class="blossom blossom-a" viewBox="0 0 220 180" aria-hidden="true"><path d="M165 8C132 46 120 68 85 91S40 132 14 166M145 41l46 5m-63 12 35 25m-57-5 7 37m-37-15-22 31m109-79 29-29" fill="none" stroke="#59402f" stroke-width="5"/><g fill="#a54232"><circle cx="147" cy="27" r="13"/><circle cx="178" cy="38" r="14"/><circle cx="165" cy="65" r="12"/><circle cx="129" cy="50" r="11"/><circle cx="101" cy="81" r="12"/><circle cx="119" cy="102" r="11"/></g><g fill="#d98e75"><circle cx="154" cy="22" r="6"/><circle cx="184" cy="34" r="6"/><circle cx="169" cy="60" r="5"/><circle cx="126" cy="46" r="5"/></g></svg>
+  <svg class="blossom blossom-b" viewBox="0 0 220 180" aria-hidden="true"><path d="M10 164C55 131 79 109 112 78s53-46 96-61M66 126l-9-35m36 12 28-27m-57 42-34 5m92-78 19 31" fill="none" stroke="#543c2c" stroke-width="5"/><g fill="#a54232"><circle cx="30" cy="145" r="13"/><circle cx="55" cy="117" r="12"/><circle cx="82" cy="104" r="13"/><circle cx="105" cy="77" r="12"/><circle cx="142" cy="55" r="11"/><circle cx="177" cy="32" r="13"/></g><g fill="#df9c81"><circle cx="35" cy="140" r="5"/><circle cx="60" cy="112" r="5"/><circle cx="86" cy="99" r="5"/><circle cx="109" cy="72" r="5"/></g></svg>
+  <h1>动机从哪里来</h1><div class="title-rule"></div>
+  <svg class="cloud cloud-a" viewBox="0 0 250 100" aria-hidden="true"><path d="M4 61c18-24 41-25 56-12 4-30 37-42 57-18 21-14 46-7 51 13 34-15 65 9 74 24H4Zm13 13h216"/></svg>
+  <section class="info-frame" aria-label="动机来源"><p class="info-copy">源自粤语“步步高”<br>三个字的<em>声调变化</em>。</p></section>
+  <svg class="cloud cloud-b" viewBox="0 0 260 110" aria-hidden="true"><path d="M4 75c21-24 45-25 60-11 5-30 38-42 58-18 21-14 46-7 51 13 34-15 65 9 82 22H4Zm15 14h225"/></svg>
+  <div class="stair-scene" id="stairScene" role="button" tabindex="0" aria-label="点击重新播放三、三、五上行动机">
+    <div class="stairs"><div class="step" data-note="0"><span class="step-num">3</span></div><div class="step" data-note="1"><span class="step-num">3</span></div><div class="step" data-note="2"><span class="step-num">5</span></div></div>
+    <svg class="music-path" viewBox="0 0 930 760" preserveAspectRatio="none" aria-hidden="true"><path class="ribbon" d="M38 579 C147 585 188 530 286 500 S438 470 485 392 S602 314 658 261 S746 183 827 104"/><path class="ribbon-highlight" d="M38 579 C147 585 188 530 286 500 S438 470 485 392 S602 314 658 261 S746 183 827 104"/><path class="arrowhead" d="M824 74 867 45 860 112Z"/></svg>
+  </div>
+  <svg class="cloud cloud-b" style="right:4px;bottom:175px;width:190px;opacity:.27" viewBox="0 0 260 110" aria-hidden="true"><path d="M4 75c21-24 45-25 60-11 5-30 38-42 58-18 21-14 46-7 51 13 34-15 65 9 82 22H4Zm15 14h225"/></svg>
+  <footer class="caption"><span><strong>骨干音动机：</strong>3 → 3 → 5　·　源于“步步高”的声调起伏</span><button class="play" id="play" type="button" aria-pressed="false"><span class="play-icon" aria-hidden="true"></span><span>重播动机</span></button></footer>
+</main>
+<script>
+const stage=document.getElementById('stage');
+const scene=document.getElementById('stairScene');
+const button=document.getElementById('play');
+const steps=[...document.querySelectorAll('.step')];
+let timers=[];
+function fit(){stage.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080))}
+function playMotif(){timers.forEach(clearTimeout);timers=[];stage.classList.remove('playing');steps.forEach(s=>s.classList.remove('active'));button.setAttribute('aria-pressed','true');button.lastElementChild.textContent='动机演示中';void stage.offsetWidth;stage.classList.add('playing');[0,1,2].forEach((index,i)=>{timers.push(setTimeout(()=>{steps.forEach(s=>s.classList.remove('active'));steps[index].classList.add('active')},i*720+260))});timers.push(setTimeout(()=>{steps.forEach(s=>s.classList.remove('active'));stage.classList.remove('playing');button.setAttribute('aria-pressed','false');button.lastElementChild.textContent='重播动机'},2600))}
+button.addEventListener('click',playMotif);scene.addEventListener('click',playMotif);scene.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();playMotif()}});addEventListener('resize',fit);fit();setTimeout(playMotif,500);
+</script>
+</body>
+</html>

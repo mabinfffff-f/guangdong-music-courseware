@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>读谱聆听 · 广东音乐线上展厅</title>
+<style>
+:root{color-scheme:dark;--ink:#f9edcf;--gold:#e2bd7d;--kai:KaiTi,STKaiti,"Songti SC",serif;--body:"Microsoft YaHei",system-ui,sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0;background:#0d130e;color:var(--ink);font-family:var(--body)}
+.stage{position:absolute;top:50%;left:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));overflow:hidden;background:linear-gradient(180deg,#101611e6,#181b14a8 41%,#101611ef),url("scene-05-lingnan-hall.jpg") center/cover no-repeat}
+.heading{position:absolute;left:96px;right:96px;top:38px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;border-bottom:1px solid #bf9a5f82;padding-bottom:18px}
+.heading h1{margin:4px 0 0;font:400 55px/1.1 var(--kai);color:#fff0d0}
+.heading p{margin:0;font-size:24px;color:var(--gold)}
+.score{position:absolute;left:50%;top:162px;transform:translateX(-50%);width:1504px;margin:0;padding:10px;background:#dbc191;border:1px solid #f0d8ac;border-radius:8px;box-shadow:0 16px 38px #0609058c}
+.paper{position:relative;overflow:hidden;background:#fff}
+.paper img{display:block;width:100%;height:auto;aspect-ratio:1918/820}
+.highlights{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;mix-blend-mode:multiply}
+.highlights rect{opacity:0;fill:#edbd62;fill-opacity:.48;stroke:#aa6a27;stroke-width:4}
+.highlights rect.active{opacity:1}
+.transport{position:absolute;top:848px;left:208px;right:208px;display:grid;grid-template-columns:auto minmax(0,1fr) 190px;align-items:center;gap:26px}
+.actions{display:flex;gap:12px}
+button{min-height:57px;padding:12px 18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid #be9a5f;border-radius:6px;background:#262e22;color:var(--ink);font:400 24px/1.2 var(--body);cursor:pointer}
+button:hover{background:#423b28}
+button.primary{background:#713329;border-color:#ce9c73}
+button.primary:hover{background:#894237}
+button:disabled{opacity:.5;cursor:default}
+button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+button:focus-visible,input:focus-visible{outline:2px solid #ffe2a1;outline-offset:4px}
+.timeline{display:flex;align-items:center;gap:16px}
+.timeline input{width:100%;min-width:55px;margin:0;accent-color:#b47945;cursor:pointer}
+.time{min-width:126px;text-align:right;white-space:nowrap;font-size:24px;font-variant-numeric:tabular-nums}
+.track-status{text-align:right;white-space:nowrap;font-size:24px;color:var(--gold)}
+.question{position:absolute;top:952px;left:208px;right:208px;margin:0;padding-top:24px;border-top:1px solid #bf9a5f82;text-align:center;color:#fff0d0;font:400 28px/1.45 var(--body)}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <header class="heading">
+    <div><p>谱例与聆听</p><h1>读谱聆听</h1></div>
+    <p>《步步高》</p>
+  </header>
+  <figure class="score" aria-label="《步步高》简谱谱例">
+    <div class="paper">
+      <img src="scene-11-score-clear.png" alt="《步步高》，广东音乐，吕文成曲，1=C，四二拍。高清谱例，两行乐谱。" width="1918" height="820">
+      <svg class="highlights" viewBox="0 0 1994 853" aria-hidden="true">
+        <rect x="78" y="483" width="344" height="108" rx="9"/>
+        <rect x="438" y="483" width="464" height="108" rx="9"/>
+        <rect x="919" y="483" width="400" height="108" rx="9"/>
+        <rect x="1334" y="483" width="436" height="108" rx="9"/>
+        <rect x="78" y="728" width="423" height="111" rx="9"/>
+        <rect x="517" y="728" width="373" height="111" rx="9"/>
+        <rect x="907" y="728" width="490" height="111" rx="9"/>
+        <rect x="1414" y="728" width="336" height="111" rx="9"/>
+      </svg>
+    </div>
+  </figure>
+  <section class="transport" aria-label="聆听控制">
+    <div class="actions">
+      <button class="primary" type="button" id="play"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m7 4 14 8-14 8Z"/></svg>播放</button>
+      <button type="button" id="pause" disabled><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5v14m6-14v14"/></svg>暂停</button>
+      <button type="button" id="replay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11a9 9 0 1 1 2 7m-2-7V5m0 6h6"/></svg>重新播放</button>
+    </div>
+    <div class="timeline">
+      <input type="range" id="seek" aria-label="音频播放进度" min="0" max="26" step=".01" value="0" disabled>
+      <span class="time"><span id="elapsed">0:00</span> / <span id="duration">0:26</span></span>
+    </div>
+    <span class="track-status" id="track-status" role="status"></span>
+    <audio id="audio" src="scene-07-bubugao-listen.mp3" preload="metadata"></audio>
+  </section>
+  <p class="question">这一乐段音乐的主奏乐器是什么？</p>
+</main>
+<script>
+(() => {
+  "use strict";
+  const get=id=>document.getElementById(id);
+  const stage=get("stage"), audio=get("audio");
+  const play=get("play"), pause=get("pause"), replay=get("replay"), seek=get("seek");
+  const status=get("track-status"), elapsed=get("elapsed"), duration=get("duration");
+  const highlights=[...document.querySelectorAll(".highlights rect")];
+  // Eight printed bars, aligned to the supplied recording. The last entry is the exit cue.
+  const cues=[8.05,9.07,10.08,11.10,12.12,13.14,14.15,15.17,16.19];
+  let frame=0, active=-1, errorMessage="";
+  function fit(){
+    stage.style.setProperty("--fit",Math.min(innerWidth/1920,innerHeight/1080));
+  }
+  const clock=time=>{
+    const seconds=Math.floor(time);
+    return Math.floor(seconds/60)+":"+String(seconds%60).padStart(2,"0");
+  };
+  function paint(){
+    const t=audio.currentTime;
+    const index=cues.findIndex((start,i)=>i<highlights.length&&t>=start&&t<cues[i+1]);
+    if(index!==active){
+      highlights[active]?.classList.remove("active");
+      highlights[index]?.classList.add("active");
+      active=index;
+    }
+    elapsed.textContent=clock(t);
+    seek.value=t;
+    seek.setAttribute("aria-valuetext",clock(t));
+    const next=errorMessage||(audio.ended?"聆听结束":index>=0?"第 "+(index+1)+" 小节":"");
+    if(status.textContent!==next) status.textContent=next;
+  }
+  function tick(){
+    paint();
+    if(!audio.paused&&!audio.ended) frame=requestAnimationFrame(tick);
+  }
+  function sync(){
+    cancelAnimationFrame(frame);
+    play.disabled=!audio.paused&&!audio.ended;
+    pause.disabled=audio.paused||audio.ended;
+    tick();
+  }
+  function start(over){
+    errorMessage="";
+    if(over||audio.ended) audio.currentTime=0;
+    audio.play().catch(error=>{
+      if(error.name==="AbortError") return;
+      errorMessage=audio.error?"音频无法读取":"暂时无法播放";
+      sync();
+    });
+  }
+  play.addEventListener("click",()=>start(false));
+  pause.addEventListener("click",()=>audio.pause());
+  replay.addEventListener("click",()=>start(true));
+  seek.addEventListener("input",()=>{
+    audio.currentTime=Number(seek.value);
+    paint();
+  });
+  audio.addEventListener("loadedmetadata",()=>{
+    if(Number.isFinite(audio.duration)&&audio.duration>0){
+      seek.max=audio.duration;
+      seek.disabled=false;
+      duration.textContent=clock(audio.duration);
+    }
+    paint();
+  });
+  ["play","pause","ended","seeked"].forEach(name=>audio.addEventListener(name,sync));
+  audio.addEventListener("error",()=>{
+    cancelAnimationFrame(frame);
+    play.disabled=true;
+    pause.disabled=true;
+    replay.disabled=true;
+    seek.disabled=true;
+    status.textContent="音频无法读取";
+  });
+  window.addEventListener("resize",fit);
+  window.addEventListener("pagehide",()=>audio.pause());
+  fit();
+  paint();
+})();
+</script>
+</body>
+</html>

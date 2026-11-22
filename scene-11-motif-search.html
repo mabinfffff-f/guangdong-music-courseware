@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#121a14">
+<title>寻找谱例中的骨干音 · 旋律探究</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#111811;color:#f8efd9;font-family:"Microsoft YaHei",system-ui,sans-serif}
+[hidden]{display:none!important}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;overflow:hidden;background:radial-gradient(ellipse at 50% 45%,#24342a,#121a14 68%,#0c120e)}
+.header{position:absolute;top:45px;left:100px;right:100px;display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid #d3b57270;padding-bottom:18px}
+.eyebrow{margin:0;color:#e2c47e;font-size:24px}
+h1{margin:6px 0 0;font:400 54px/1.15 KaiTi,STKaiti,"Songti SC",serif;color:#fff2d5}
+.header-side{color:#dbcfb4;font-size:24px}
+.score-shell{position:absolute;left:50%;top:190px;transform:translateX(-50%);width:1520px;padding:0;background:transparent}
+.score-paper{position:relative;width:100%;padding:0;background:#faf8f0;color:#171611;box-shadow:0 18px 55px #0009}
+.score-image{display:block;width:100%;height:auto}
+.answer-overlay{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.answer-mark{opacity:0;fill:#f0c866;fill-opacity:.42;stroke:#a96520;stroke-width:5;vector-effect:non-scaling-stroke;transition:opacity .2s}
+.stage.revealed .answer-mark{opacity:1}
+.controls{position:absolute;z-index:3;left:150px;right:150px;bottom:10px;display:flex;align-items:center;justify-content:center;gap:18px}
+button{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:58px;padding:12px 22px;border:1px solid #ceb475;border-radius:5px;background:#242e23;color:#fff2d5;font:400 24px/1.2 "Microsoft YaHei",sans-serif;cursor:pointer}
+button:hover{background:#41432d}
+button.primary{background:#78372d;border-color:#d8ad75}
+button.primary:hover{background:#914438}
+button:focus-visible{outline:3px solid #ffe39c;outline-offset:4px}
+.icon{font-size:23px}
+.question{position:absolute;z-index:2;left:250px;right:250px;bottom:118px;margin:0;text-align:center;color:#fff2d5;font-size:28px}
+.status{min-width:180px;text-align:left;color:#e6d5ae;font-size:24px}
+.score-image{cursor:pointer}
+.question-card{position:absolute;z-index:5;left:50%;top:50%;width:780px;min-height:390px;padding:96px 86px;transform:translate(-50%,-50%);display:grid;place-items:center;text-align:center;background:linear-gradient(145deg,#fffaf0,#f1e3ca);border:4px solid #9c3828;border-radius:38px;color:#33261c;box-shadow:inset 0 0 0 7px #f8f0df,inset 0 0 0 10px #b67b43,0 22px 65px #0009;cursor:pointer;animation:card-in .24s ease-out}
+.question-card::before{content:"";position:absolute;top:30px;left:50%;width:124px;height:24px;transform:translateX(-50%);border-top:1px solid #c29a5a;border-bottom:1px solid #c29a5a;border-radius:50%;opacity:.8}
+.question-card::after{content:"❧";position:absolute;top:27px;left:50%;transform:translateX(-50%);padding:0 12px;background:#f7edda;color:#a82e24;font:30px/1 Georgia,serif}
+.question-card p{margin:0;font:400 46px/1.55 KaiTi,STKaiti,"Songti SC",serif}
+.question-card p::before{content:"";display:inline-block;width:14px;height:14px;margin:0 18px 5px 0;border-radius:50%;background:#a52e25;vertical-align:middle}
+@keyframes card-in{from{opacity:0;scale:.96}to{opacity:1;scale:1}}
+@media(max-width:900px){.question-card{width:82%;min-height:240px;padding:64px 36px;border-radius:24px}.question-card p{font-size:25px}.question-card::before{top:20px}.question-card::after{top:17px}}
+@media(max-width:900px){.header{top:4%;left:5%;right:5%}.eyebrow{font-size:16px}h1{font-size:34px}.header-side{font-size:15px}.score-shell{width:90%}.controls{left:5%;right:5%;bottom:13%;gap:8px}button{min-height:44px;padding:8px 12px;font-size:16px}.question{left:5%;right:5%;bottom:3%;font-size:20px}.status{font-size:13px}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<header class="header"><div><p class="eyebrow">旋律探究</p><h1>寻找谱例中的骨干音</h1></div><span class="header-side">《步步高》主题旋律</span></header>
+<section class="score-shell" aria-label="《步步高》主题简谱">
+<div class="score-paper">
+<img class="score-image" src="scene-11-score-clear.png" alt="《步步高》原谱例，第一小节为335">
+<svg class="answer-overlay" viewBox="0 0 1918 820" preserveAspectRatio="none" aria-hidden="true">
+<rect class="answer-mark" x="74" y="465" width="253" height="98" rx="12"/>
+</svg>
+</div>
+</section>
+<div class="question-card" id="question-card" role="dialog" aria-modal="true" aria-label="随乐视唱，乐曲开头的核心动机 3 3 5 音调源自哪里？" hidden>
+<p>随乐视唱，乐曲开头的核心动机 3 3 5 音调源自哪里？</p>
+</div>
+<div class="controls">
+<button class="primary" id="answer" type="button" aria-pressed="false"><span class="icon" aria-hidden="true">◉</span><span>显示答案</span></button>
+<button id="audio-toggle" type="button"><span class="icon" aria-hidden="true">▶</span><span>播放主题旋律</span></button>
+<span class="status" id="audio-status" role="status"></span>
+<audio id="theme" src="步步高主题旋律.mp3" preload="metadata"></audio>
+</div>
+<p class="question">聆听并观察：主题旋律骨干音是什么？</p>
+</main>
+<script>
+const stage=document.getElementById("stage");
+function fit(){stage.style.setProperty("--fit",Math.min(innerWidth/1920,innerHeight/1080))}
+addEventListener("resize",fit);fit();
+const scoreImage=document.querySelector(".score-image"),questionCard=document.getElementById("question-card");
+scoreImage.addEventListener("click",()=>{questionCard.hidden=false;});
+questionCard.addEventListener("click",()=>{questionCard.hidden=true;});
+addEventListener("keydown",event=>{if(event.key==="Escape") questionCard.hidden=true;});
+const answer=document.getElementById("answer");
+answer.addEventListener("click",()=>{
+ const shown=answer.getAttribute("aria-pressed")!=="true";
+ answer.setAttribute("aria-pressed",String(shown));
+ stage.classList.toggle("revealed",shown);
+ answer.querySelector("span:last-child").textContent=shown?"隐藏答案":"显示答案";
+});
+const audio=document.getElementById("theme"),toggle=document.getElementById("audio-toggle"),status=document.getElementById("audio-status");
+toggle.addEventListener("click",()=>{
+ if(audio.paused){audio.play().then(()=>{toggle.querySelector("span:last-child").textContent="暂停旋律";toggle.querySelector(".icon").textContent="Ⅱ";status.textContent="";}).catch(()=>{status.textContent="暂无法读取音频文件";});}
+ else{audio.pause();toggle.querySelector("span:last-child").textContent="播放主题旋律";toggle.querySelector(".icon").textContent="▶";}
+});
+audio.addEventListener("ended",()=>{toggle.querySelector("span:last-child").textContent="播放主题旋律";toggle.querySelector(".icon").textContent="▶";});
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+

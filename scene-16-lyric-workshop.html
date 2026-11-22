@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#142820">
+<title>创编体验 · 我的校园步步高</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;background:#172b23;color:#303128;font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+button,input{font:inherit}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;overflow:hidden;background:linear-gradient(110deg,#122a22e8,#152d2470 62%,#10251cd9),url("scene-16-workshop.png") center/cover}
+.page{position:absolute;inset:0;display:grid;grid-template-rows:112px minmax(0,1fr) 86px;gap:17px;padding:36px 56px 30px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .22s}
+.page.active{opacity:1;visibility:visible;pointer-events:auto}
+header{display:flex;align-items:center;justify-content:space-between;color:#fff8e9;border-bottom:1px solid #c1a86d;padding:0 8px 14px;gap:24px}
+.eyebrow{margin:0 0 5px;font-size:23px;color:#edd28e}h1{font-size:47px;line-height:1.12;margin:0;font-weight:600}.lead{margin:0;font-size:27px}
+.content{display:grid;grid-template-columns:minmax(0,1fr) 405px;gap:20px;min-height:0}
+.panel{background:#fffaf0;border:1px solid #cbb47c;border-radius:7px;min-width:0;min-height:0}
+.score-panel{display:flex;flex-direction:column;padding:16px 19px 12px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:4px}
+h2{font-size:28px;color:#253b30;margin:0}.tag{font-size:21px;color:#8a4334;background:#f2e6d3;padding:3px 10px;border-radius:3px}
+.score-wrap{position:relative;flex:1;min-height:0;display:grid;place-items:center;overflow:hidden}
+.score-inner{position:relative;width:100%;aspect-ratio:2098/1124;container-type:inline-size}
+.score-inner img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+.score-note{border-top:1px solid #ded2b8;padding-top:7px;text-align:center;color:#545447;font-size:21px}
+.side{padding:22px 23px;display:flex;flex-direction:column;min-height:0}
+.side h2{font-size:30px;margin:0 0 13px}
+.example{font:400 29px/1.8 KaiTi,STKaiti,"Songti SC",serif;color:#34372d;white-space:pre-line}
+.example .accent{color:#9b4936}
+.side-note{margin-top:auto;border-top:1px solid #ded2b8;padding-top:15px;font-size:22px;line-height:1.65;color:#635f52}
+.fill{position:absolute;z-index:2;height:5.2%;min-height:30px;padding:0 3px;border:0;border-bottom:3px solid #bd3028;border-radius:0;background:#fffdf4;color:#a82e26;text-align:center;font-size:clamp(19px,1.4cqw,29px);line-height:1;outline:none}
+.fill{border-bottom:0;background:transparent;color:#49372e}
+.fill.has-value{background:#fffefa}
+.fill:focus{outline:2px solid #c49447;outline-offset:2px;background:#fff8df}.fill::placeholder{color:transparent}
+.f1{left:1.6%;top:37.5%;width:9.4%}.f2{left:26%;top:37.5%;width:10.2%}.f3{left:60.3%;top:37.5%;width:9.3%}.f4{left:12.8%;top:58.7%;width:7.8%}.f5{left:28.4%;top:58.7%;width:34.2%}
+.write-side{gap:13px}.theme{margin:0;color:#8a4938;font-size:22px}.write-side h2{margin:0}.write-hint{font-size:22px;line-height:1.5;color:#625f53;margin:0}
+.word-list{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.word{height:47px;border:1px solid #c6d0bd;border-radius:4px;background:#edf1e7;color:#2d513f;font-size:23px;cursor:pointer}.word:hover,.word.selected{background:#dce8d8;border-color:#71927b}
+.custom{border-top:1px solid #ded2b8;padding-top:12px;margin-top:2px}.custom label{display:block;font-size:21px;color:#514e44;margin-bottom:7px}.custom input{width:100%;height:47px;border:1px solid #bcb29b;border-radius:4px;padding:6px 10px;background:#fffdf8;font-size:23px}.custom input::placeholder{color:#8b877a}
+.current{margin-top:auto;padding-top:10px;color:#635f52;font-size:20px}.current strong{color:#8a4334;font-weight:500}
+.status{min-height:25px;color:#687061;font-size:18px;margin-top:4px}
+nav{display:flex;align-items:center;gap:10px}.nav-spacer{flex:1}
+.navbtn{height:49px;padding:0 20px;border:1px solid #ab9b7b;border-radius:4px;background:#fbf4e7;color:#333329;font-size:22px;cursor:pointer}
+.navbtn:hover{filter:brightness(.96)}.navbtn.primary{background:#285844;color:#fff9e9;border-color:#285844}.navbtn.save{background:#9a3d32;color:#fff;border-color:#9a3d32}
+footer{display:flex;align-items:center;justify-content:space-between;padding:0 15px;border:1px solid #ad9869;border-radius:6px;background:#142b23f2;color:#f5ebd1}
+.footer-title{font-size:22px}.footer-hint{font-size:19px;color:#ded1ad}
+@media(max-width:850px) and (orientation:portrait){
+body{overflow:auto}.stage{position:relative;left:auto;top:auto;transform:none;width:auto;height:auto;min-height:100vh;background-position:center}
+.page{position:relative;inset:auto;min-height:100vh;display:none;padding:14px 10px;grid-template-rows:auto auto auto;gap:10px}.page.active{display:grid}
+header{display:block;padding:0 4px 10px}.eyebrow{font-size:16px}h1{font-size:32px}.lead{font-size:19px;margin-top:8px}
+.content{display:flex;flex-direction:column;gap:10px}.score-panel{height:57vh;min-height:365px;padding:8px}.panel-head h2,.side h2{font-size:20px}.tag{font-size:14px}.score-note{font-size:13px}
+.fill{min-height:16px;border-bottom-width:2px;font-size:clamp(9px,2.8vw,17px)}
+.side{padding:13px;min-height:220px}.example{font-size:20px;line-height:1.55}.side-note{font-size:15px}.write-side{gap:7px}.theme,.write-hint,.custom label,.current{font-size:14px}.word-list{grid-template-columns:repeat(4,1fr);gap:4px}.word{height:37px;font-size:14px}.custom input{height:40px;font-size:16px}
+nav{flex-wrap:wrap}footer{width:100%;padding:8px}.footer-title{font-size:14px}.footer-hint{font-size:12px}.navbtn{height:40px;padding:0 11px;font-size:15px}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<section class="page active" id="intro" aria-labelledby="intro-title">
+<header><div><p class="eyebrow">广东音乐线上展厅 · 创意工坊</p><h1 id="intro-title">创编体验</h1></div><p class="lead">听熟悉的旋律，写下校园里的新故事。</p></header>
+<div class="content">
+<section class="panel score-panel" aria-labelledby="example-score-title">
+<div class="panel-head"><h2 id="example-score-title">《我的校园步步高》填空谱</h2><span class="tag">创编题目</span></div>
+<figure class="score-wrap"><div class="score-inner"><img src="scene-16-clean-score.png" alt="《步步高》填空简谱，红线处为歌词创编位置。"></div></figure>
+<p class="score-note">先观察红线位置与旋律，再读一读右侧范例。</p>
+</section>
+<aside class="panel side">
+<h2>范例 ·《我的校园步步高》</h2>
+<p class="example">校园上，歌声悄悄，
+爬上云霄，带来多少，多少欢笑。
+哈哈哈，哈哈哈，哈哈哈哈哈。
+无论男女，无论老少。</p>
+<p class="side-note">这是一种填词示例。进入下一页，试着为自己的校园写下新歌词。</p>
+</aside>
+</div>
+<nav aria-label="页面导航">
+<button class="navbtn" type="button" disabled>上一页</button><span class="nav-spacer"></span><span class="footer-hint">第 1 页 / 2</span><button class="navbtn primary" id="toWrite" type="button">开始我的创编　→</button>
+</nav>
+<footer><span class="footer-title">广东音乐博物馆 · 创意创编</span><span class="footer-hint">《我的校园步步高》</span></footer>
+</section>
+<section class="page" id="write" aria-labelledby="write-title" inert>
+<header><div><p class="eyebrow">广东音乐线上展厅 · 创意工坊</p><h1 id="write-title">我的创编</h1></div><p class="lead">点击谱面红线直接填词，歌词会同步显示在谱例上。</p></header>
+<div class="content">
+<section class="panel score-panel" aria-labelledby="write-score-title">
+<div class="panel-head"><h2 id="write-score-title">《我的校园步步高》填空谱</h2><span class="tag">点选红线开始填写</span></div>
+<div class="score-wrap"><div class="score-inner" id="score">
+<img src="scene-16-clean-score.png" alt="《我的校园步步高》填空简谱，红线处可以输入歌词。">
+<input class="fill f1" data-slot="1" aria-label="第一处红线填词" maxlength="8" autocomplete="off">
+<input class="fill f2" data-slot="2" aria-label="第二处红线填词" maxlength="8" autocomplete="off">
+<input class="fill f3" data-slot="3" aria-label="第三处红线填词" maxlength="8" autocomplete="off">
+<input class="fill f4" data-slot="4" aria-label="第四处红线填词" maxlength="8" autocomplete="off">
+<input class="fill f5" data-slot="5" aria-label="第五处红线填词" maxlength="16" autocomplete="off">
+</div></div>
+<p class="score-note">可直接输入自己的歌词；右侧灵感词仅供参考。</p>
+</section>
+<aside class="panel side write-side">
+<p class="theme">创编题目 ·《我的校园步步高》</p><h2>灵感词（可选）</h2>
+<p class="write-hint">点击灵感词填入第一小节；也可在任意红线处手动填写。</p>
+<div class="word-list" id="words"></div>
+<div class="custom"><label for="customWord">自己输入填词 · 写入当前红线</label><input id="customWord" maxlength="16" placeholder="输入自己的词句，再点“填入”"><div style="display:flex;justify-content:flex-end;margin-top:7px"><button class="navbtn primary" id="insertCustom" type="button">填入当前红线</button></div></div>
+<p class="current">当前填词位置：<strong id="currentSlot">第 1 处红线</strong></p>
+<p class="status" id="status" role="status">填写后会即时显示在谱例上。</p>
+</aside>
+</div>
+<nav aria-label="页面导航">
+<button class="navbtn" id="backIntro" type="button">← 返回范例</button><span class="nav-spacer"></span><span class="footer-hint">第 2 页 / 2</span><button class="navbtn" id="listen" type="button">▷　试听主题旋律</button><button class="navbtn" id="clear" type="button">清空填写</button><button class="navbtn save" id="save" type="button">保存创编</button>
+</nav>
+<footer><span class="footer-title">广东音乐博物馆 · 创意创编</span><span class="footer-hint">让熟悉的旋律，唱出校园的新故事</span></footer>
+<audio id="melody" src="步步高主题旋律.mp3" preload="none"></audio>
+</section>
+</main>
+<script>
+'use strict';
+const $=id=>document.getElementById(id), pages=[$('intro'),$('write')], inputs=[...document.querySelectorAll('.fill')];
+const key='bubugao-lyric-workshop-16-v2', oldKey='bubugao-lyric-workshop-16', words=['校园','课堂','操场','黑板','书桌','窗台','奖状'];
+let active=inputs[0],playing=false;
+function showPage(index){
+ pages.forEach((page,i)=>{const on=i===index;page.classList.toggle('active',on);page.inert=!on});
+ window.scrollTo(0,0);
+ if(index===1){requestAnimationFrame(fit);if(!inputs.some(input=>input.value))inputs[0].focus({preventScroll:true})}
+}
+if(location.hash==='#write')showPage(1);
+window.addEventListener('hashchange',()=>showPage(location.hash==='#write'?1:0));
+function fit(){const stage=$('stage');stage.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080))}
+function announce(text){$('status').textContent=text}
+function setActive(input){active=input;inputs.forEach(item=>item.setAttribute('aria-current',String(item===input)));$('currentSlot').textContent='第 '+input.dataset.slot+' 处红线'}
+function saveDraft(){try{localStorage.setItem(key,JSON.stringify(inputs.map(input=>input.value)))}catch{}}
+try{
+ const draft=JSON.parse(localStorage.getItem(key));
+ if(Array.isArray(draft))inputs.forEach((input,i)=>{if(typeof draft[i]==='string')input.value=draft[i]});
+ else{
+  const previous=JSON.parse(localStorage.getItem(oldKey));
+  const autoExample=['校园','云霄','哈哈哈','哈哈哈','哈哈哈哈哈'];
+  if(Array.isArray(previous)&&!autoExample.every((value,i)=>previous[i]===value))
+   inputs.forEach((input,i)=>{if(typeof previous[i]==='string')input.value=previous[i]});
+  localStorage.removeItem(oldKey);
+ }
+}catch{}
+inputs.forEach(input=>{
+ input.classList.toggle('has-value',Boolean(input.value));
+ input.addEventListener('focus',()=>setActive(input));
+ input.addEventListener('input',()=>{input.classList.toggle('has-value',Boolean(input.value));saveDraft();announce('歌词已显示在谱例相应位置。')});
+ input.addEventListener('keydown',event=>{if(event.key==='Enter'){event.preventDefault();const next=inputs[inputs.indexOf(input)+1];if(next)next.focus()}});
+});
+setActive(active);
+words.forEach(word=>{
+ const button=document.createElement('button');button.type='button';button.className='word';button.textContent=word;
+ button.addEventListener('click',()=>{
+  const first=inputs[0];
+  first.value=word;
+  first.focus();first.setSelectionRange(word.length,word.length);
+  first.dispatchEvent(new Event('input',{bubbles:true}));
+  announce('已将“'+word+'”填入第一小节；其他小节可手动填写。');
+ });
+ $('words').append(button);
+});
+$('toWrite').addEventListener('click',()=>{location.hash='write';showPage(1)});
+$('backIntro').addEventListener('click',()=>{history.pushState(null,'',location.pathname+location.search);showPage(0)});
+const melody=$('melody');
+$('listen').addEventListener('click',async()=>{
+ if(playing){melody.pause();melody.currentTime=0;playing=false;$('listen').textContent='▷　试听主题旋律';announce('试听已停止。');return}
+ try{melody.currentTime=0;await melody.play();playing=true;$('listen').textContent='Ⅱ　停止试听';announce('正在播放《步步高》主题旋律。')}catch{announce('主题旋律暂时无法播放，请检查音频文件。')}
+});
+melody.addEventListener('ended',()=>{playing=false;$('listen').textContent='▷　试听主题旋律';announce('主题旋律播放结束。')});
+$('clear').addEventListener('click',()=>{
+ if(!inputs.some(input=>input.value))return announce('填词位置还是空的。');
+ if(!confirm('清空谱例上的全部填词？'))return;
+ inputs.forEach(input=>{input.value='';input.classList.remove('has-value')});saveDraft();announce('已清空，可以重新创编。');inputs[0].focus();
+});
+$('insertCustom').addEventListener('click',()=>{
+ const box=$('customWord'),value=box.value.trim();if(!value){box.focus();return announce('先输入自己的词句。')}
+ const start=active.selectionStart??active.value.length,end=active.selectionEnd??active.value.length;
+ active.value=active.value.slice(0,start)+value+active.value.slice(end);
+ active.focus();active.setSelectionRange(start+value.length,start+value.length);active.dispatchEvent(new Event('input',{bubbles:true}));box.value='';
+});
+$('save').addEventListener('click',()=>{
+ const entries=inputs.filter(input=>input.value.trim()).map(input=>'填空 '+input.dataset.slot+'：'+input.value.trim());
+ if(!entries.length)return announce('先在谱面红线位置填写歌词。');
+ saveDraft();
+ const content=['《我的校园步步高》创编','主题：我的校园','',...entries].join('\r\n');
+ const blob=new Blob(['\ufeff',content],{type:'text/plain;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');
+ a.href=url;a.download='我的校园步步高-创编.txt';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);announce('已保存创编歌词。');
+});
+window.addEventListener('resize',fit);fit();
+window.addEventListener('pagehide',()=>melody.pause());
+</script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08110f">
+<title>《步步高》乐曲结构</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#070e0d;color:#f0efdf;font-family:"Microsoft YaHei",system-ui,sans-serif}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;overflow:hidden;transform:translate(-50%,-50%) scale(var(--fit,1));transform-origin:center;background:radial-gradient(ellipse at 50% 45%,#13211f 0,#0a1312 56%,#060b0b 100%)}
+.grain{position:absolute;inset:0;opacity:.17;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.2'/%3E%3C/svg%3E")}
+.frame{position:absolute;inset:48px 78px 54px;border:1px solid #71807866;border-radius:5px;pointer-events:none;box-shadow:inset 0 0 70px #0002}
+.topline{position:absolute;left:112px;right:112px;top:78px;display:flex;align-items:center;gap:14px;color:#b6c0b7;font-size:22px}.dot{width:10px;height:10px;border-radius:50%;background:#d5c17c;box-shadow:0 0 12px #d5c17c55}
+h1{position:absolute;left:112px;top:150px;margin:0;font:400 68px/1.2 KaiTi,STKaiti,"Songti SC",serif;color:#f1eedf}.subtitle{position:absolute;left:116px;top:258px;margin:0;color:#bcc4b9;font-size:25px}.subtitle strong{color:#dfd298;font-weight:500}
+.structure-panel{position:absolute;left:112px;right:112px;top:350px;height:470px;border:1px solid #71807868;border-radius:7px;background:linear-gradient(115deg,#0d1918d9,#0c1716ed);box-shadow:0 20px 55px #0004,inset 0 1px #ffffff08;overflow:hidden}
+.panel-title{position:absolute;left:44px;top:30px;color:#d9d9ca;font:500 26px/1.3 KaiTi,STKaiti,"Songti SC",serif}.panel-meta{position:absolute;right:44px;top:35px;color:#86958c;font-size:19px}
+.timeline-line{position:absolute;left:10%;right:10%;top:196px;height:0;border-top:2px dashed #76827a73}.timeline-line:before{content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:linear-gradient(90deg,#cfbf7b 0%,#cfbf7b var(--progress,0%),transparent var(--progress,0%));opacity:.78;transition:width .2s}
+.nodes{position:absolute;inset:0;display:grid;grid-template-columns:repeat(5,1fr);align-items:start;padding:112px 25px 0}.node{--state:#e6e8dc;position:relative;justify-self:center;width:260px;height:320px;padding:0;border:0;background:transparent;color:inherit;font:inherit;display:flex;flex-direction:column;align-items:center;text-align:center;cursor:pointer;outline:none;transition:opacity .45s,filter .45s}.node.future{opacity:.48}.node.past{--state:#9ba79b;opacity:.72;filter:saturate(.45)}.node.current{--state:#ead995;opacity:1;filter:none}.node:focus-visible .orb{outline:3px solid #e4d69a;outline-offset:6px}
+.orb{position:relative;width:168px;height:168px;border:1.5px solid #b8c0b2a8;border-radius:50%;display:grid;place-items:center;background:#0b1614e8;color:var(--state);font:400 58px/1 Georgia,"Times New Roman",serif;transition:background .45s,border .45s,box-shadow .45s,transform .45s;z-index:1}.node.current .orb{border-color:#e9d995;background:radial-gradient(circle at 45% 38%,#c6b77a47,#a9985940 62%,#1b211a 100%);box-shadow:0 0 0 9px #dbca8420,0 0 38px #d7c47730;transform:scale(1.04)}.node.past .orb{border-color:#96a09488;background:#24302b;color:#aeb8a8}.node.future .orb{background:#101a19;border-color:#b9c0b14f;color:#c2c9bc}
+.node-name{margin-top:25px;color:var(--state);font:500 27px/1.3 KaiTi,STKaiti,"Songti SC",serif;transition:color .35s,opacity .35s}.node-time{margin-top:11px;color:#9ca89e;font-size:19px}.node.current .node-time{color:#e0d49f}.node.past .node-time{color:#89978e}
+.playback{position:absolute;left:112px;right:112px;bottom:104px;height:100px;border:1px solid #78867d66;border-radius:52px;background:#0d1918e8;display:flex;align-items:center;padding:0 26px;gap:24px;box-shadow:0 12px 35px #0003}.play-button{width:62px;height:62px;border:1px solid #d5c27e;border-radius:50%;display:grid;place-items:center;background:#d5c27e;color:#17201b;cursor:pointer;flex:none}.play-button:hover{filter:brightness(1.08)}.play-button svg{width:25px;height:25px;fill:currentColor}.track{width:230px;flex:none;display:flex;flex-direction:column;gap:5px}.track-name{color:#efeada;font:500 22px/1.2 KaiTi,STKaiti,"Songti SC",serif}.track-sub{color:#929f95;font-size:16px}.scrub{height:6px;flex:1;appearance:none;border-radius:9px;background:linear-gradient(90deg,#d6c481 0%,#d6c481 var(--played,0%),#59655e var(--played,0%),#59655e 100%);cursor:pointer;outline:none}.scrub::-webkit-slider-thumb{appearance:none;width:17px;height:17px;border-radius:50%;background:#eee1ac;border:2px solid #f4eddb;box-shadow:0 0 12px #decf92}.scrub::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:#eee1ac;border:2px solid #f4eddb;box-shadow:0 0 12px #decf92}.clock{min-width:145px;color:#c3c8bd;font-size:17px;text-align:right;font-variant-numeric:tabular-nums}.replay{width:48px;height:48px;display:grid;place-items:center;border:1px solid #7480788c;border-radius:50%;background:transparent;color:#d5d8c9;cursor:pointer}.replay:hover{border-color:#d5c27e;color:#e8dba4}.replay svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.8}
+.status{position:absolute;left:50%;bottom:48px;transform:translateX(-50%);color:#8f9b90;font-size:19px;white-space:nowrap}.status strong{font-weight:500;color:#d7ca91}
+@media(max-width:900px){h1{font-size:48px;top:15%}.subtitle{font-size:18px;top:26%}.structure-panel{top:36%;height:42%}.nodes{padding:12% 0 0}.node{width:18vw;height:auto}.orb{width:10vw;height:10vw;min-width:78px;min-height:78px;font-size:35px}.node-name{font-size:18px;margin-top:14px}.node-time{font-size:14px}.timeline-line{top:35%}.playback{bottom:10%;height:9%;gap:14px;padding:0 16px}.track{width:150px}.track-name{font-size:17px}.clock{min-width:95px;font-size:14px}.play-button{width:48px;height:48px}.status{bottom:4%;font-size:14px}}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+  <div class="grain"></div><div class="frame"></div>
+  <div class="topline"><span class="dot"></span><span>广东音乐线上展厅 · 乐曲结构</span></div>
+  <h1>《步步高》乐曲结构</h1>
+  <p class="subtitle">聆听音乐，观察<strong>引子 → 第一段 → 第二段 → 第三段 → 尾声</strong>依次展开</p>
+  <section class="structure-panel" aria-label="《步步高》五段结构时间轴">
+    <div class="panel-title">乐曲结构 · 聆听时间轴</div><div class="panel-meta">随音乐播放逐段呈现</div>
+    <div class="timeline-line" id="timelineLine"></div>
+    <div class="nodes" id="nodes">
+      <button class="node future" type="button" data-start="0" aria-label="引子，00:00"><span class="orb">序</span><span class="node-name">引子</span><span class="node-time">00:00</span></button>
+      <button class="node future" type="button" data-start="8" aria-label="第一段，00:08"><span class="orb">一</span><span class="node-name">第一段</span><span class="node-time">00:08</span></button>
+      <button class="node future" type="button" data-start="40" aria-label="第二段，00:40"><span class="orb">二</span><span class="node-name">第二段</span><span class="node-time">00:40</span></button>
+      <button class="node future" type="button" data-start="68" aria-label="第三段，01:08"><span class="orb">三</span><span class="node-name">第三段</span><span class="node-time">01:08</span></button>
+      <button class="node future" type="button" data-start="96" aria-label="尾声，01:36"><span class="orb">终</span><span class="node-name">尾声</span><span class="node-time">01:36</span></button>
+    </div>
+  </section>
+  <section class="playback" aria-label="《步步高》播放控制">
+    <button class="play-button" id="play" type="button" aria-label="播放"><svg id="playIcon" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></button>
+    <div class="track"><span class="track-name">广东音乐 ·《步步高》</span><span class="track-sub">完整聆听 · 结构随时间展开</span></div>
+    <input class="scrub" id="scrub" type="range" min="0" max="1000" value="0" aria-label="播放进度">
+    <span class="clock"><span id="current">00:00</span> / <span id="duration">--:--</span></span>
+    <button class="replay" id="replay" type="button" aria-label="重新播放" title="重新播放"><svg viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2 6M3 11V5m0 6h6"/></svg></button>
+  </section>
+  <div class="status" id="status">播放时，各段结构将按时间节点<strong>依次点亮</strong></div>
+  <audio id="audio" preload="metadata" src="scene-13-bubugao.mp3"></audio>
+</main>
+<script>
+const stage=document.getElementById('stage');
+const audio=document.getElementById('audio');
+const playButton=document.getElementById('play');
+const playIcon=document.getElementById('playIcon');
+const scrub=document.getElementById('scrub');
+const current=document.getElementById('current');
+const duration=document.getElementById('duration');
+const status=document.getElementById('status');
+const line=document.getElementById('timelineLine');
+const nodes=[...document.querySelectorAll('.node')];
+function fit(){stage.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080))}
+function formatTime(value){if(!Number.isFinite(value))return'00:00';const n=Math.floor(value);return String(Math.floor(n/60)).padStart(2,'0')+':'+String(n%60).padStart(2,'0')}
+function render(){const t=audio.currentTime||0;const d=audio.duration||0;const active=nodes.reduce((found,node,index)=>t>=Number(node.dataset.start)?index:found,-1);nodes.forEach((node,index)=>{node.classList.toggle('current',index===active);node.classList.toggle('past',index<active);node.classList.toggle('future',index>active)});current.textContent=formatTime(t);if(d){scrub.value=String(Math.round(t/d*1000));scrub.style.setProperty('--played',(t/d*100)+'%');line.style.setProperty('--progress',(t/d*100)+'%')}if(active>=0){const name=nodes[active].querySelector('.node-name').textContent;status.innerHTML='当前段落：<strong>'+name+'</strong>'}else status.innerHTML='播放时，各段结构将按时间节点<strong>依次点亮</strong>'}
+function setPlaying(value){playButton.setAttribute('aria-label',value?'暂停':'播放');playIcon.innerHTML=value?'<path d="M7 5h4v14H7zm6 0h4v14h-4z"/>':'<path d="M8 5v14l11-7z"/>'}
+async function togglePlayback(){if(audio.paused){try{await audio.play()}catch{status.innerHTML='<strong>音频无法播放</strong>，请确认音频与网页在同一文件夹'}}else audio.pause()}
+playButton.addEventListener('click',togglePlayback);
+document.getElementById('replay').addEventListener('click',()=>{audio.currentTime=0;audio.play().catch(()=>{status.innerHTML='<strong>音频无法播放</strong>，请确认音频与网页在同一文件夹'})});
+scrub.addEventListener('input',()=>{if(audio.duration){audio.currentTime=Number(scrub.value)/1000*audio.duration;render()}});
+nodes.forEach(node=>node.addEventListener('click',()=>{audio.currentTime=Number(node.dataset.start);render();if(audio.paused)audio.play().catch(()=>{})}));
+audio.addEventListener('loadedmetadata',()=>{duration.textContent=formatTime(audio.duration);scrub.disabled=false;render()});
+audio.addEventListener('timeupdate',render);audio.addEventListener('seeked',render);audio.addEventListener('play',()=>setPlaying(true));audio.addEventListener('pause',()=>setPlaying(false));audio.addEventListener('ended',()=>{setPlaying(false);render();status.innerHTML='全曲聆听完成 · <strong>引子、三段与尾声</strong>已呈现'});audio.addEventListener('error',()=>{status.innerHTML='<strong>找不到音频</strong>，请将 scene-13-bubugao.mp3 与网页放在同一文件夹'});
+addEventListener('resize',fit);fit();render();
+</script>
+</body>
+</html>

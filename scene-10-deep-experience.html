@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#12251d">
+<title>深度体验 · 主题旋律演唱</title>
+<style>
+:root{color-scheme:dark;--cream:#f8f0dc;--gold:#e4c27e;--green:#193329;--red:#8b3d30;--kai:KaiTi,STKaiti,"Songti SC",serif}
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;background:#101710;color:var(--cream);font-family:"Microsoft YaHei","PingFang SC",sans-serif}
+.stage{position:absolute;left:50%;top:50%;width:1920px;height:1080px;transform:translate(-50%,-50%) scale(var(--fit,1));overflow:hidden;background:linear-gradient(180deg,#0c1712e8,#15261ba8 42%,#0b1712ed),url("scene-05-lingnan-hall.jpg") center/cover}
+.head{position:absolute;left:86px;right:86px;top:42px;display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid #c9a96980;padding-bottom:17px}
+.eyebrow{margin:0 0 6px;color:var(--gold);font-size:23px}h1{font:400 52px/1.18 var(--kai);margin:0;color:#fff2d5}.work{color:#e5d6b8;font:26px var(--kai)}
+.paper-frame{position:absolute;left:50%;top:148px;transform:translateX(-50%);width:1490px;max-height:660px;padding:12px;border:1px solid #d6b876;background:#d6bd8a;box-shadow:0 18px 45px #050805a3}
+.paper{overflow:hidden;background:#fff}.paper img{display:block;width:100%;height:auto}
+.caption{position:absolute;top:830px;left:160px;right:160px;text-align:center;color:#fff0d2;font:28px/1.5 var(--kai)}
+.transport{position:absolute;left:50%;top:910px;transform:translateX(-50%);width:980px;display:flex;align-items:center;gap:18px;padding:18px 22px;border:1px solid #d6b876;border-radius:6px;background:#14231eeF}
+.play{width:58px;height:58px;flex:none;border:0;border-radius:50%;background:#a14837;color:white;font-size:25px;cursor:pointer}
+.track{flex:1;min-width:0}.track strong{display:block;font-size:21px;font-weight:500}.track span{font-size:16px;color:#d7c69e}.seek{width:100%;accent-color:#d7b773}.time{width:93px;text-align:right;font-size:16px;font-variant-numeric:tabular-nums}
+.status{position:absolute;top:100%;left:10px;right:10px;margin:8px;text-align:center;font-size:15px;color:#dfc995}
+@media(max-width:850px){
+.stage{width:100vw;height:100dvh;transform:none;left:0;top:0}
+.head{left:5%;right:5%;top:4%;padding-bottom:10px}.eyebrow{font-size:15px}h1{font-size:32px}.work{font-size:16px}
+.paper-frame{top:18%;width:92%;padding:6px}.caption{top:auto;bottom:20%;left:5%;right:5%;font-size:20px}
+.transport{top:auto;bottom:7%;width:90%;padding:9px;gap:9px}.play{width:44px;height:44px}.track strong{font-size:15px}.track span,.time{font-size:12px}.time{width:62px}
+}
+</style>
+</head>
+<body>
+<main class="stage" id="stage">
+<header class="head"><div><p class="eyebrow">广东音乐线上展厅 · 深度聆听</p><h1>跟着主题唱一唱</h1></div><span class="work">《步步高》</span></header>
+<figure class="paper-frame" aria-label="《步步高》真实谱例"><div class="paper"><img src="scene-07-bubugao-score.png" alt="《步步高》简谱谱例"></div></figure>
+<p class="caption">看谱聆听主题旋律，跟着熟悉的音调轻声哼唱。</p>
+<section class="transport" aria-label="主题旋律播放">
+<button class="play" id="play" type="button" aria-label="播放主题旋律">▶</button>
+<div class="track"><strong>《步步高》主题旋律</strong><span id="state">准备就绪</span></div>
+<input class="seek" id="seek" type="range" min="0" max="1000" value="0" aria-label="播放进度">
+<span class="time" id="time">00:00 / --:--</span>
+<audio id="audio" src="步步高主题旋律.mp3" preload="metadata"></audio>
+<p class="status" id="status" role="status"></p>
+</section>
+</main>
+<script>
+const $=id=>document.getElementById(id),stage=$('stage'),audio=$('audio');
+function fit(){stage.style.setProperty('--fit',Math.min(innerWidth/1920,innerHeight/1080))}
+function fmt(value){if(!Number.isFinite(value))return'00:00';const s=Math.floor(value);return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
+function update(){const d=audio.duration||0,t=audio.currentTime||0;$('time').textContent=fmt(t)+' / '+fmt(d||NaN);$('seek').value=d?String(Math.round(t/d*1000)):'0'}
+$('play').addEventListener('click',async()=>{if(audio.paused){try{await audio.play()}catch{$('status').textContent='音频暂时无法播放，请检查课件素材。'}}else audio.pause()});
+audio.addEventListener('play',()=>{$('play').textContent='Ⅱ';$('play').setAttribute('aria-label','暂停主题旋律');$('state').textContent='正在播放'});
+audio.addEventListener('pause',()=>{$('play').textContent='▶';$('play').setAttribute('aria-label','播放主题旋律');if(!audio.ended)$('state').textContent='已暂停'});
+audio.addEventListener('ended',()=>{$('state').textContent='播放结束'});
+audio.addEventListener('timeupdate',update);audio.addEventListener('loadedmetadata',update);
+audio.addEventListener('error',()=>$('status').textContent='找不到主题旋律音频，请确认课件素材完整。');
+$('seek').addEventListener('input',()=>{if(audio.duration){audio.currentTime=Number($('seek').value)/1000*audio.duration;update()}});
+addEventListener('resize',fit);fit();update();
+</script>
+</body>
+</html>
