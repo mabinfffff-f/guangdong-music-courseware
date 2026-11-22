@@ -55,5 +55,5 @@ audio.addEventListener('error',()=>$('status').textContent='找不到主题旋�
 $('seek').addEventListener('input',()=>{if(audio.duration){audio.currentTime=Number($('seek').value)/1000*audio.duration;update()}});
 addEventListener('resize',fit);fit();update();
 </script>
-</body>
+<style>.course-nav{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;justify-content:space-between;align-items:end;padding:0 2.6% 2.2%;pointer-events:none;font-family:"Microsoft YaHei",sans-serif}.course-nav a{pointer-events:auto;max-width:44vw;display:inline-flex;align-items:center;gap:10px;padding:11px 16px;border:1px solid #d8bb78;border-radius:3px;background:rgba(16,23,19,.91);color:#fff3d8;text-decoration:none;font-size:clamp(15px,1.15vw,22px);line-height:1.35;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(4px)}.course-nav a:hover,.course-nav a:focus-visible{background:#594322;color:#fff;outline:2px solid #f0d48e;outline-offset:2px}.course-nav .next{margin-left:auto;text-align:right}@media(max-width:650px){.course-nav{padding:0 10px 10px}.course-nav a{max-width:47vw;padding:8px 10px;gap:6px;font-size:14px}}</style><nav class="course-nav" aria-label="课件页面导航"><a class="prev" href="scene-12-motif-animation.html">&larr; 主题动机</a><a class="next" href="scene-13-full-listening.html">完整聆听与声波标记 &rarr;</a></nav></body>
 </html>

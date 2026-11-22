@@ -43,15 +43,5 @@ markers.forEach(item => item.addEventListener("click", () => {
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") select(null);
 });
-</script><style>
-.page-nav{position:fixed;inset:auto 3.2% 3.2%;z-index:5;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
-.page-nav a{pointer-events:auto;display:inline-flex;align-items:center;gap:.45em;padding:10px 16px;border:1px solid #e8c77c;border-radius:3px;background:#101713d9;color:#fff3d8;text-decoration:none;font:600 clamp(14px,1.25vw,22px)/1.2 "Microsoft YaHei",sans-serif;box-shadow:0 2px 12px #0005}
-.page-nav a:hover,.page-nav a:focus-visible{background:#594322;color:#fff}
-@media(max-width:600px){.page-nav{inset:auto 12px 12px}.page-nav a{padding:8px 11px}}
-</style>
-<nav class="page-nav" aria-label="展厅导航">
-  <a href="scene-05-masterpieces.html">返回岭南名曲展厅</a>
-  <a href="scene-07-score-listening-offline.html">进入读谱聆听</a>
-</nav>
-</body>
+</script><style>.course-nav{position:fixed;left:0;right:0;bottom:0;z-index:9999;display:flex;justify-content:space-between;align-items:end;padding:0 2.6% 2.2%;pointer-events:none;font-family:"Microsoft YaHei",sans-serif}.course-nav a{pointer-events:auto;max-width:44vw;display:inline-flex;align-items:center;gap:10px;padding:11px 16px;border:1px solid #d8bb78;border-radius:3px;background:rgba(16,23,19,.91);color:#fff3d8;text-decoration:none;font-size:clamp(15px,1.15vw,22px);line-height:1.35;box-shadow:0 2px 12px rgba(0,0,0,.35);backdrop-filter:blur(4px)}.course-nav a:hover,.course-nav a:focus-visible{background:#594322;color:#fff;outline:2px solid #f0d48e;outline-offset:2px}.course-nav .next{margin-left:auto;text-align:right}@media(max-width:650px){.course-nav{padding:0 10px 10px}.course-nav a{max-width:47vw;padding:8px 10px;gap:6px;font-size:14px}}</style><nav class="course-nav" aria-label="课件页面导航"><a class="prev" href="scene-05-masterpieces.html">&larr; 岭南名曲展厅</a><a class="next" href="scene-07-score-listening-offline.html">读谱聆听 &rarr;</a></nav></body>
 </html>
