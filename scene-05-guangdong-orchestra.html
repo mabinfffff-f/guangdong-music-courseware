@@ -43,6 +43,15 @@ markers.forEach(item => item.addEventListener("click", () => {
 document.addEventListener("keydown", event => {
   if (event.key === "Escape") select(null);
 });
-</script>
+</script><style>
+.page-nav{position:fixed;inset:auto 3.2% 3.2%;z-index:5;display:flex;justify-content:space-between;align-items:center;pointer-events:none}
+.page-nav a{pointer-events:auto;display:inline-flex;align-items:center;gap:.45em;padding:10px 16px;border:1px solid #e8c77c;border-radius:3px;background:#101713d9;color:#fff3d8;text-decoration:none;font:600 clamp(14px,1.25vw,22px)/1.2 "Microsoft YaHei",sans-serif;box-shadow:0 2px 12px #0005}
+.page-nav a:hover,.page-nav a:focus-visible{background:#594322;color:#fff}
+@media(max-width:600px){.page-nav{inset:auto 12px 12px}.page-nav a{padding:8px 11px}}
+</style>
+<nav class="page-nav" aria-label="展厅导航">
+  <a href="scene-05-masterpieces.html">返回岭南名曲展厅</a>
+  <a href="scene-07-score-listening-offline.html">进入读谱聆听</a>
+</nav>
 </body>
 </html>
